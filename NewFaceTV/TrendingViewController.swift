@@ -10,7 +10,9 @@ import UIKit
 
 class TrendingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var listOfMovies = [Movie]() {
+     let c = Constants()
+    
+    private var listOfMovies = [Movie]() {
         didSet{
             DispatchQueue.main.async {
                 self.moviesTableView.reloadData()
@@ -39,9 +41,8 @@ class TrendingViewController: UIViewController, UITableViewDelegate, UITableView
                 print("Failed to fetch data:", error)
             }
         }
-        
         moviesTableView.rowHeight = UITableView.automaticDimension
-        moviesTableView.estimatedRowHeight = 700
+        moviesTableView.estimatedRowHeight = CGFloat(c.estimateRowHeight)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,8 +56,6 @@ class TrendingViewController: UIViewController, UITableViewDelegate, UITableView
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
- 
 }
 
 extension TrendingViewController {
@@ -66,18 +65,18 @@ extension TrendingViewController {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants().trendingCell , for: indexPath) as! MovieTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: c.trendingCell , for: indexPath) as! MovieTableViewCell
         let movie = listOfMovies[indexPath.row]
         cell.titleLabel.text = movie.title
-        cell.setupPosterImage(posterPath: Constants().imageBaseURL+movie.poster_path)
-        cell.popularityLabel.text = "Popularity:\(String(movie.popularity))"
-        cell.voteAverageLabel.text = "Rating:\(String(movie.vote_average))"
+        cell.setupPosterImage(posterPath: c.imageBaseURL+movie.poster_path)
+        cell.popularityLabel.text = c.popularity+(String(movie.popularity))
+        cell.voteAverageLabel.text = c.rating+(String(movie.vote_average))
         
         return cell
      }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return (view.frame.size.width * 1.63) + 88
+        return (view.frame.size.width * CGFloat(c.tableViewHeightToWidthRatio)) + CGFloat(c.eightyEight)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

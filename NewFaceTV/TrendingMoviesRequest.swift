@@ -11,7 +11,7 @@ import Foundation
 
 struct MoviesRequest {
          //API url address to call
-    let urlString =  Constants().baseURL+Constants().trendingMovies+Constants().plus+Constants().apiKey
+    private let urlString =  Constants().baseURL+Constants().trendingMovies+Constants().plus+Constants().apiKey
        
     
     func fetchMovieData(completion: @escaping (Result<[Movie], Error>)->Void){

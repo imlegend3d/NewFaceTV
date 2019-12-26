@@ -12,8 +12,8 @@ let imageCache = NSCache<AnyObject, AnyObject>()
 
 class CustomImageView: UIImageView {
     
-    var task: URLSessionDataTask!
-    var imageURLString: String?
+    private var task: URLSessionDataTask!
+    private var imageURLString: String?
     
     func loadImage(from url: URL){
         

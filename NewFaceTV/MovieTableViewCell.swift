@@ -17,8 +17,18 @@ class MovieTableViewCell: UITableViewCell {
             posterImage.clipsToBounds = true
         }
     }
-    @IBOutlet weak var popularityLabel: UILabel!
-    @IBOutlet weak var voteAverageLabel: UILabel!
+    @IBOutlet weak var popularityLabel: UILabel!{
+        didSet{
+            popularityLabel.adjustsFontSizeToFitWidth = true
+            popularityLabel.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    @IBOutlet weak var voteAverageLabel: UILabel! {
+        didSet{
+            voteAverageLabel.adjustsFontSizeToFitWidth = true
+            voteAverageLabel.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
    
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +39,7 @@ class MovieTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    var imageCache = NSCache<AnyObject, UIImage>()
+    private var imageCache = NSCache<AnyObject, UIImage>()
     
     func setupPosterImage(posterPath: String){
         if let url = URL(string: posterPath){
